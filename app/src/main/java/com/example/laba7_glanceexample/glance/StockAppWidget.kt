@@ -13,6 +13,7 @@ import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
@@ -37,7 +38,9 @@ import java.time.Duration
 
 class StockAppWidget : GlanceAppWidget() {
     private var job: Job? = null
-
+    private fun refreshPrice() {
+        PriceDataRepo.update()
+    }
     companion object {
         private val smallMode = DpSize(100.dp, 80.dp)
         private val mediumMode = DpSize(120.dp, 120.dp)
@@ -70,6 +73,7 @@ class StockAppWidget : GlanceAppWidget() {
                 .cornerRadius(15.dp)
                 .background(GlanceTheme.colors.background)
                 .padding(8.dp)
+                .clickable{refreshPrice()}
         ) {
             StockDisplay(stateCount)
             Image(
@@ -94,6 +98,7 @@ class StockAppWidget : GlanceAppWidget() {
                 .fillMaxSize()
                 .background(GlanceTheme.colors.background)
                 .padding(8.dp)
+                .clickable{refreshPrice()}
         ) {
             StockDisplay(stateCount)
         }
